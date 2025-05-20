@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme, extending AppCompat -->
+    <style name="Theme.TaskManangement" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <!-- Darker variant of primary brand color -->
+        <item name="colorPrimaryDark">@color/purple_700</item>
+        <!-- Accent color -->
+        <item name="colorAccent">@color/teal_200</item>
+        <!-- Customize other theme attributes as needed -->
+    </style>
+
+</resources>
