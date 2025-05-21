@@ -70,10 +70,16 @@ dependencies {
     implementation(libs.androidx.recyclerview)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.work.runtime.ktx)
     ksp(libs.androidx.room.compiler)
 
     // Google Play services GCM
     implementation(libs.play.services.gcm)
+
+    //Retrofit
+    implementation(libs.retrofit)
+    implementation (libs.retrofit.converter.gson)
+//    implementation("com.squareup.retrofit2:converter-name:3.0.0")
 
     // Testing
     testImplementation(libs.junit)
