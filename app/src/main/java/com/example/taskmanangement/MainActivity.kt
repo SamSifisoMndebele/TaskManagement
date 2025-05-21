@@ -78,8 +78,8 @@ class MainActivity : AppCompatActivity() {
                 if (title.isNotEmpty()) {
                     val newTask = TodoTask(title = title, description = description, isCompleted = false)
                     viewModel.addTask(newTask)
+                    playTaskAddedSound()
                     Toast.makeText(this@MainActivity, "Task added", Toast.LENGTH_SHORT).show()
-
                     etTaskTitle.text.clear()
                     etTaskDesc.text.clear()
                 } else {
