@@ -92,5 +92,3 @@ This application aims to implement the following features based on the project b
     To get a local copy of this project, you'll need to clone its Git repository.
     *   HTTPS URL: `https://github.com/SamSifisoMndebele/TaskManagement.git`
     *   SSH URL: `git@github.com:SamSifisoMndebele/TaskManagement.git`
-    *   **Open your Terminal or Command Prompt.**
-    *   **Navigate to your desired projects folder:**
