@@ -1,15 +1,17 @@
 package com.example.taskmanangement
 
 import android.content.Context
-import androidx.compose.ui.unit.Constraints
+import android.util.Log
+import androidx.work.Constraints
 import androidx.work.CoroutineWorker
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import java.util.concurrent.TimeUnit
 
 // Worker for sending overdue notifications
-/*
 class OverdueTaskNotifierWorker(appContext: Context, workerParams: WorkerParameters) :
     CoroutineWorker(appContext, workerParams) {
     override suspend fun doWork(): Result {
@@ -20,21 +22,35 @@ class OverdueTaskNotifierWorker(appContext: Context, workerParams: WorkerParamet
     }
 }
 
-// In your TaskViewModel or a dedicated scheduler class:
-fun scheduleOverdueTaskChecks() {
-    val constraints = Constraints.Builder()
-        .setRequiredNetworkType(androidx.work.NetworkType.CONNECTED) // Example constraint
-        .build()
+class TaskScheduler(private val applicationContext: Context) {
+    companion object {
+        const val OVERDUE_TASK_CHECK_WORK_NAME = "overdueTaskCheck"
+        const val REPEAT_INTERVAL_DAYS = 1L // Use L for Long
+        private const val TAG = "TaskScheduler" // For logging
+    }
+    fun scheduleOverdueTaskChecks() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
 
-    val periodicWorkRequest = PeriodicWorkRequestBuilder<OverdueTaskNotifierWorker>(
-        1, TimeUnit.DAYS // Check daily, for example
-    )
-        .setConstraints(constraints)
-        .build()
+        val periodicWorkRequest = PeriodicWorkRequestBuilder<OverdueTaskNotifierWorker>(
+            REPEAT_INTERVAL_DAYS, TimeUnit.DAYS
+        )
+            .setConstraints(constraints)
+            .setInitialDelay(5, TimeUnit.MINUTES)
+            .build()
 
-    WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
-        "overdueTaskCheck",
-        androidx.work.ExistingPeriodicWorkPolicy.KEEP, // Or REPLACE
-        periodicWorkRequest
-    )
-}*/
+        try {
+            WorkManager.getInstance(applicationContext).enqueueUniquePeriodicWork(
+                OVERDUE_TASK_CHECK_WORK_NAME,
+                ExistingPeriodicWorkPolicy.KEEP,
+                periodicWorkRequest
+            )
+            Log.i(TAG, "Successfully scheduled overdue task checks.")
+        } catch (e: Exception) {
+            // While WorkManager enqueue operations are generally safe,
+            // catching unexpected issues can be good practice.
+            Log.e(TAG, "Error scheduling overdue task checks", e)
+        }
+    }
+}
