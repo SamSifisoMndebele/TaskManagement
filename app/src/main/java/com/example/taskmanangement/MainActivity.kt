@@ -48,49 +48,51 @@ class MainActivity : AppCompatActivity() {
             }
         )
 
-        // Setup RecyclerView
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
+        with(binding) {
+            // Setup RecyclerView
+            recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+            recyclerView.adapter = adapter
 
-        // Observe LiveData
-        viewModel.allTasks.observe(this) { tasks ->
-            adapter.updateList(tasks)
-        }
-
-        // Add Task button
-        binding.btnAddTask.setOnClickListener {
-            val title = binding.etTaskTitle.text.toString().trim()
-            val description = binding.etTaskDesc.text.toString().trim()
-
-            if (title.isNotEmpty()) {
-                val newTask = TodoTask(title = title, description = description, isCompleted = false)
-                viewModel.addTask(newTask)
-                Toast.makeText(this, "Task added", Toast.LENGTH_SHORT).show()
-
-                binding.etTaskTitle.text.clear()
-                binding.etTaskDesc.text.clear()
-            } else {
-                Toast.makeText(this, "Please enter a task title", Toast.LENGTH_SHORT).show()
+            // Observe LiveData
+            viewModel.allTasks.observe(this@MainActivity) { tasks ->
+                adapter.updateList(tasks)
             }
-        }
 
-        // Delete Completed button
-        binding.btnDeleteCompleted.setOnClickListener {
-            viewModel.deleteCompletedTasks()
-            Toast.makeText(this, "Completed tasks deleted", Toast.LENGTH_SHORT).show()
-        }
+            // Add Task button
+            btnAddTask.setOnClickListener {
+                val title = etTaskTitle.text.toString().trim()
+                val description = etTaskDesc.text.toString().trim()
 
-        // SearchView filter
-        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean = false
+                if (title.isNotEmpty()) {
+                    val newTask = TodoTask(title = title, description = description, isCompleted = false)
+                    viewModel.addTask(newTask)
+                    Toast.makeText(this@MainActivity, "Task added", Toast.LENGTH_SHORT).show()
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                val allTasks = viewModel.allTasks.value ?: emptyList()
-                val filtered = if (newText.isNullOrBlank()) allTasks
-                else allTasks.filter { it.title.contains(newText, ignoreCase = true) }
-                adapter.updateList(filtered)
-                return true
+                    etTaskTitle.text.clear()
+                    etTaskDesc.text.clear()
+                } else {
+                    Toast.makeText(this@MainActivity, "Please enter a task title", Toast.LENGTH_SHORT).show()
+                }
             }
-        })
+
+            // Delete Completed button
+            btnDeleteCompleted.setOnClickListener {
+                viewModel.deleteCompletedTasks()
+                Toast.makeText(this@MainActivity, "Completed tasks deleted", Toast.LENGTH_SHORT).show()
+            }
+
+            // SearchView filter
+            searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean = false
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    val allTasks = viewModel.allTasks.value ?: emptyList()
+                    val filtered = if (newText.isNullOrBlank()) allTasks
+                    else allTasks.filter { it.title.contains(newText, ignoreCase = true) }
+                    adapter.updateList(filtered)
+                    return true
+                }
+            })
+        }
     }
 }
