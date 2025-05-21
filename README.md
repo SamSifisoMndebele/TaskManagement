@@ -66,7 +66,7 @@ This application aims to implement the following features based on the project b
 
 **1.4) Basic Graphics and Multimedia Support (15/15)**
 *   **[X] An image (checkbox icon) next to each task in the `RecyclerView` to indicate its completion status.** (Implemented in `TaskAdapter.kt` using `android.R.drawable.checkbox_on_background` and `checkbox_off_background`)
-*   **[ ] Play a notification sound when a task is added.** *(Not explicitly implemented in the provided code snippets. This would typically involve using `MediaPlayer` or `SoundPool`.)*
+*   **[X] Play a notification sound when a task is added.** (Implemented in `MainActivity.kt` using `MediaPlayer`)
 *   **[X] Display a toast message when a task is added.** (Implemented in `MainActivity.kt`)
 *   **[X] Display a toast message when a task is deleted.** (Implemented in `MainActivity.kt` and `TaskAdapter.kt`)
 *   **[X] Display a toast message when a task is marked as completed or incomplete.** (Implemented in `MainActivity.kt`)
@@ -81,7 +81,7 @@ This application aims to implement the following features based on the project b
 *   **[ ] Implement a feature to send an email when a task is overdue.** *(Not implemented. This would typically involve `Intent.ACTION_SEND` for email clients or backend integration.)*
 *   **[ ] Implement a feature to send an SMS reminder for incomplete tasks.** *(Not implemented. This would typically involve `Intent.ACTION_SENDTO` for SMS or backend integration, and requires careful permission handling.)*
 
-**1.7) Implementing Database Features (12/15)**
+**1.7) Implementing Database Features (10/15)**
 *   **[X] Store tasks using the Room Database for persistence.** (3/3) (Implemented via `TaskDatabase.kt`, `TaskDao.kt`, and usage in `TaskViewModel.kt`)
 *   **[ ] Implement Dark Mode support for the app.** (0/3) *(Not explicitly implemented in the provided Kotlin/Java files. This is usually handled via `themes.xml` (e.g., inheriting from a `Theme.MaterialComponents.DayNight` theme) and potentially dynamic theme switching.)*
 *   **[X] Add a search bar to filter tasks by title.** (3/3) (Implemented in `MainActivity.kt` using `SearchView` and filtering logic within its `OnQueryTextListener`)
