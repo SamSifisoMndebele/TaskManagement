@@ -1,5 +1,6 @@
 package com.example.taskmanangement
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewModel: TaskViewModel
     private lateinit var adapter: TaskAdapter
+    private var mediaPlayer: MediaPlayer? = null
 
     private val viewModelFactory by lazy {
         val taskDao = Room.databaseBuilder(this, TaskDatabase::class.java, "task_database")
@@ -20,6 +22,16 @@ class MainActivity : AppCompatActivity() {
             .build()
             .taskDao()
         TaskViewModelFactory(taskDao)
+    }
+
+    private fun playTaskAddedSound() {
+        mediaPlayer?.release() // Release previous instance if any
+        mediaPlayer = MediaPlayer.create(this, R.raw.notification_sound) // Assume you have task_added_sound.mp3 in res/raw
+        mediaPlayer?.setOnCompletionListener { mp ->
+            mp.release()
+            mediaPlayer = null
+        }
+        mediaPlayer?.start()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,5 +106,11 @@ class MainActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer?.release() // Ensure release on activity destroy
+        mediaPlayer = null
     }
 }
