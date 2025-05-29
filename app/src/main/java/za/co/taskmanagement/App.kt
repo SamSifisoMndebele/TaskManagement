@@ -42,7 +42,7 @@ fun App() {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = "Add New Task",
-            style = MaterialTheme.typography.headlineMedium
+            style = MaterialTheme.typography.headlineSmall
         )
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
@@ -92,7 +92,7 @@ fun App() {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Tasks",
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineSmall
             )
         }
         LazyColumn {
