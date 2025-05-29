@@ -59,6 +59,7 @@ fun App() {
 
         OutlinedButton(
             modifier = Modifier.fillMaxWidth(),
+            enabled = title.isNotBlank(),
             onClick = {
                 val task = Task(
                     title = title,
@@ -78,19 +79,21 @@ fun App() {
                 TaskItem(task) { isCompleted ->
                     tasks = tasks.map {
                         if (it == task) it.copy(isCompleted = isCompleted)
-                        else task
+                        else it
                     }
                 }
             }
         }
 
-        OutlinedButton(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = {
-                tasks = tasks.filterNot { it.isCompleted }
+        if (tasks.any { it.isCompleted }) {
+            OutlinedButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    tasks = tasks.filterNot { it.isCompleted }
+                }
+            ) {
+                Text("Delete Completed Task")
             }
-        ) {
-            Text("Delete Completed Task")
         }
     }
 }
